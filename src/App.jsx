@@ -1,15 +1,12 @@
-import CssBaseline from '@mui/material/CssBaseline'
-import { Board } from './pages/Board'
-import { ThemeProvider } from '@mui/material'
-import theme from './theme'
+import { CssBaseline } from "@mui/material";
+import { Board } from "./pages/Board";
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <CssBaseline>
       <Board />
-    </ThemeProvider>
+    </CssBaseline>
   )
 }
 
-export default App
+export default App;
