@@ -1,15 +1,22 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme } from "@mui/material";
 
 const theme = createTheme({
   typography: {
-    fontFamily: 'Orbitron, Arial, sans-serif',
+    fontFamily: "Orbitron, Arial, sans-serif",
     h1: {
-      fontSize: '48px',
-      lineHeight: '60px',
+      fontSize: "48px",
+      lineHeight: "60px",
       fontWeight: 500,
-      color: 'white'
-    }
+      color: "white",
+    },
   },
+
+  palette: {
+    text: {
+      secondary: "#33353F",
+    },
+  },
+
   components: {
     MuiButton: {
       styleOverrides: {
@@ -25,65 +32,69 @@ const theme = createTheme({
         },
       },
     },
-  },
-   MuiTypography: {
+
+    MuiTypography: {
       styleOverrides: {
         root: {
-          color: '#fff',
-        }
-      }
+          color: "#fff",
+        },
+      },
     },
+
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          height: '36px',
-          '& .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#33353F',
+          height: "36px",
+
+          "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#33353F",
           },
-          '&:hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#fff',
+
+          "&:hover .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#fff",
           },
-          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#17D9B1',
+
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#17D9B1",
           },
         },
+
         input: {
-          height: '36px',
-          padding: '0 14px',
-          display: 'flex',
-          alignItems: 'center',
-          fontSize: '16px',
-          color: '#fff',
-          '&::placeholder': {
-            color: '#33353F',
+          height: "36px",
+          padding: "0 14px",
+          fontSize: "16px",
+          color: "#fff",
+
+          "&::placeholder": {
+            color: "#33353F",
             opacity: 1,
-            fontSize: '16px',
+            fontSize: "16px",
           },
         },
       },
     },
-     MuiSelect: {
+    MuiSelect: {
       styleOverrides: {
         root: {
-          '& .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#33353F',
+          "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#33353F",
           },
-          '&:hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#fff',
+          "&:hover .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#fff",
           },
-          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#17D9B1',
-            borderWidth: '2px',
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#17D9B1",
+            borderWidth: "2px",
           },
-          '&.MuiSelect-select.MuiSelect-outlined': {
-            color: '#fff',
-            fontSize: '16px',
+          "&.MuiSelect-select.MuiSelect-outlined": {
+            color: "#fff",
+            fontSize: "16px",
           },
         },
         select: {
           '&[aria-expanded="false"]': {
-            color: '#fff',
-            fontSize: '16px',
+            color: "#fff",
+            fontSize: "16px",
           },
         },
       },
@@ -91,9 +102,9 @@ const theme = createTheme({
     MuiInputLabel: {
       styleOverrides: {
         root: {
-          color: '#fff',
-          '&.Mui-focused': {
-            color: '#fff',
+          color: "#fff",
+          "&.Mui-focused": {
+            color: "#fff",
           },
         },
       },
@@ -101,15 +112,17 @@ const theme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          backgroundColor: 'transparent',
-          boxShadow: 'none',
-          border: 'none',
+          backgroundColor: "transparent",
+          boxShadow: "none",
+          border: "none",
         },
       },
     },
     palette: {
-    textSecondary: '#33353F'
-  }
+      textSecondary: "#33353F",
+    },
+  },
 });
 
-export default theme;
+
+export default theme

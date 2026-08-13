@@ -12,18 +12,21 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
+import Select from "@mui/material/Select";
 import bannerImage from "../assets/banner.png";
 import tecboardLogo from "../assets/tecboard.svg";
+import { eventSchema } from "../../schema";
 
-import { styled } from "@mui/material";
+import { MenuItem, styled } from "@mui/material";
+import { useState } from "react";
 
-const Chip = styled(Box)(({theme}) => ({
-  display: 'inline-flex',
+const Chip = styled(Box)(({ theme }) => ({
+  display: "inline-flex",
   backgroundColor: theme.palette.textSecondary,
-  padding: '8px',
-  borderRadius: '4px',
-marginBottom: '1'
-}))
+  padding: "8px",
+  borderRadius: "4px",
+  marginBottom: "1",
+}));
 
 const eventCategories = [
   {
@@ -146,6 +149,27 @@ const eventCategories = [
 ];
 
 export function Board() {
+  const [formData, setFormData] = useState({
+    name: "",
+    date: "",
+    theme: "",
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const resultValidation = eventSchema.safeParse(formData)
+    if(resultValidation.success) {
+      console.log(resultValidation.data)
+    } else {
+      console.log(resultValidation.error)
+    }
+  };
+
   return (
     <Box sx={{ height: "100vh", backgroundColor: "#06151A" }}>
       {/* Header */}
@@ -179,7 +203,7 @@ export function Board() {
               left: "50%",
               transform: "translateX(-50%)",
               width: "652px",
-              textAlign: "center"
+              textAlign: "center",
             }}
           >
             Seu hub de eventos de tecnologia
@@ -189,6 +213,8 @@ export function Board() {
 
       {/* // Formulário */}
       <Box
+        component="form"
+        onSubmit={handleSubmit}
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -216,12 +242,15 @@ export function Board() {
                 htmlFor="name"
                 sx={{ position: "static", transform: "none", mb: 1 }}
               >
-                Qual o nome do evento?
+                Nome do evento
               </InputLabel>
               <OutlinedInput
                 id="name"
+                name="name"
                 placeholder="Summer dev hits"
                 fullWidth
+                onChange={handleChange}
+                value={formData.name}
               />
             </FormControl>
             <FormControl fullWidth>
@@ -230,9 +259,16 @@ export function Board() {
                 htmlFor="date"
                 sx={{ position: "static", transform: "none", mb: 1 }}
               >
-                Data do evento?
+                Data do evento
               </InputLabel>
-              <OutlinedInput id="date" placeholder="XX/XX/XXXX" fullWidth />
+              <OutlinedInput
+                id="date"
+                name="date"
+                placeholder="XX/XX/XXXX"
+                fullWidth
+                onChange={handleChange}
+                value={formData.date}
+              />
             </FormControl>
             <FormControl fullWidth>
               <InputLabel
@@ -240,58 +276,77 @@ export function Board() {
                 htmlFor="theme"
                 sx={{ position: "static", transform: "none", mb: 1 }}
               >
-                Tema do evento?
+                Tema do evento
               </InputLabel>
-              <OutlinedInput
+              <Select
                 id="theme"
+                name="theme"
+                defaultValue=""
+                displayEmpty
                 placeholder="Selecione uma opção"
                 fullWidth
-              />
+                value={formData.theme}
+              >
+                <MenuItem value="" disabled>
+                  Selecione uma opção
+                </MenuItem>
+                <MenuItem value="Front-end">Front end</MenuItem>
+                <MenuItem value="Design">Design</MenuItem>
+                <MenuItem value="Marketing">Marketing</MenuItem>
+              </Select>
             </FormControl>
-            <Button sx={{ alignSelf: 'center' }}>Criar evento</Button>
+            <Button type="submit" sx={{ alignSelf: "center" }}>
+              Criar evento
+            </Button>
           </Stack>
         </Box>
 
-      {/* // Listagem de Eventos */}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          width: "100%",
-          maxWidth: "1200px",
-          mt: "60px",
-          gap: "64px",
-        }}
-      >
-        {eventCategories.map((category) => (
-          <Box key={category.name}>
-            <Typography>{category.name}</Typography>
+        {/* // Listagem de Eventos */}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            maxWidth: "1200px",
+            mt: "60px",
+            gap: "64px",
+          }}
+        >
+          {eventCategories.map((category) => (
+            <Box key={category.name}>
+              <Typography>{category.name}</Typography>
 
-            <Grid container spacing={2} sx={{ maxWidth: "1200px", mx: "auto" }}>
-              {category.events.map((event) => (
-                <Grid item xs={12} sm={6} md={4} key={event.id}>
-                  <Card sx={{ width: "282px" }}>
-                    <CardMedia
-                      component="img"
-                      height="140px"
-                      image={event.image}
-                      alt={event.name}
-                    />
-                    <CardContent sx={{ flexGrow: 1 }}>
-                      <Chip>                   
-                        <Typography variant="caption">{event.theme}</Typography>
-                      </Chip>
-                      <Typography>{event.date}</Typography>
-                      <Typography>{event.name}</Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
-          </Box>
-        ))}
+              <Grid
+                container
+                spacing={2}
+                sx={{ maxWidth: "1200px", mx: "auto" }}
+              >
+                {category.events.map((event) => (
+                  <Grid item xs={12} sm={6} md={4} key={event.id}>
+                    <Card sx={{ width: "282px" }}>
+                      <CardMedia
+                        component="img"
+                        height="140px"
+                        image={event.image}
+                        alt={event.name}
+                      />
+                      <CardContent sx={{ flexGrow: 1 }}>
+                        <Chip>
+                          <Typography variant="caption">
+                            {event.theme}
+                          </Typography>
+                        </Chip>
+                        <Typography>{event.date}</Typography>
+                        <Typography>{event.name}</Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
+          ))}
+        </Box>
       </Box>
-    </Box>
     </Box>
   );
 }
